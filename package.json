@@ -1,0 +1,18 @@
+{
+  "name": "ctfbot",
+  "version": "1.0.0",
+  "description": "discord bot to control the flow of the upcoming ctf",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "start:dev": "nodemon ./src/index.js"
+  },
+  "author": "Paper",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "node": "^21.2.0",
+    "nodemon": "^3.0.2"
+  }
+}
