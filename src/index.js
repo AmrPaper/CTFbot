@@ -1,11 +1,8 @@
 const {Client, IntentsBitField, ActivityType} = require("discord.js");
+const mongoose = require("mongoose");
 require("dotenv").config(); //for env vars
 const {submitFlag, guide, welcome, intro} = require("./commands.js");
-const {target, support} = require("./troll.js");
 const prefix = "!"; //command prefix
-
-const paperid = "285820732032679946"
-const samid = "642152174046150656"
 
 //discord bot itself and what it's capable of accessing
 const client = new Client({
@@ -46,17 +43,15 @@ function messageHandling(msg) {
     };
 };
 
-function troll(msg) {
-    if (msg.author.bot) return;
-
-    if (msg.author.id === paperid) {
-        target(msg);
-    } else if (msg.author.id === samid) {
-        support(msg);
-    };
-}
-
 //run the client
-client.on("messageCreate", messageHandling);
-client.on("messageCreate", troll);
-client.login(process.env.BOT_TOKEN);
+(async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("connected to the database")
+
+        client.on("messageCreate", messageHandling);
+        client.login(process.env.BOT_TOKEN);
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
+})();
