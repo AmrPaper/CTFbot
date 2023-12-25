@@ -1,7 +1,8 @@
 const {Client, IntentsBitField, ActivityType} = require("discord.js");
 const mongoose = require("mongoose");
 require("dotenv").config(); //for env vars
-const {submitFlag, guide, welcome, intro} = require("./commands.js");
+const {submitFlag, welcome, intro} = require("./commands.js");
+const {setup} = require("./teamAssignment.js");
 const prefix = "!"; //command prefix
 
 //discord bot itself and what it's capable of accessing
@@ -11,6 +12,7 @@ const client = new Client({
         IntentsBitField.Flags.GuildMembers,
         IntentsBitField.Flags.GuildMessages,
         IntentsBitField.Flags.MessageContent,
+        IntentsBitField.Flags.GuildMessageReactions,
     ],
 });
 
@@ -40,7 +42,10 @@ function messageHandling(msg) {
         intro(msg);
     } else if (cmd === "bloop") {
         console.log(msg.author);
-    };
+        msg.reply("User info logged!");
+    } else if (cmd === "setup") {
+        setup(msg, client);
+    }
 };
 
 //run the client
