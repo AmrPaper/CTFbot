@@ -1,5 +1,4 @@
 const {Client, IntentsBitField, ActivityType} = require("discord.js");
-const mongoose = require("mongoose");
 require("dotenv").config(); //for env vars
 const {submitFlag, welcome, intro} = require("./commands.js");
 const {setup} = require("./teamAssignment.js");
@@ -25,6 +24,21 @@ client.on("ready", (c) => {
     });
 });
 
+const commandHandlers = {
+    "submit-flag": submitFlag,
+    "welcome": welcome,
+    "intro": intro,
+    "bloop": (msg) => {
+        console.log(msg.author);
+        msg.reply("User info logged!");
+    },
+    "blip": (msg) => {
+        console.log(msg.member.roles.cache.map(r => r.name));
+        msg.reply("User roles logged!");
+    },
+};
+
+
 //running different commands depending on the user's input
 function messageHandling(msg) {
     if (msg.author.bot || !msg.content.startsWith(prefix)) return; //ignore bot messages and user messages that don't start with "!"
@@ -32,28 +46,21 @@ function messageHandling(msg) {
     const args = msg.content.slice(prefix.length).trim().split(/ +/);
     const cmd = args.shift().toLowerCase();
 
-    if (cmd === "submit-flag") {
-        submitFlag(msg, args);
-    } else if (cmd === "guide") {
-        guide(msg);
-    } else if (cmd === "welcome") {
-        welcome(msg);
-    } else if (cmd === "intro") {
-        intro(msg);
-    } else if (cmd === "bloop") {
-        console.log(msg.author);
-        msg.reply("User info logged!");
-    } else if (cmd === "setup") {
-        setup(msg, client);
-    }
+    if (cmd === "setup") {
+        setup(msg, client)
+    } else {
+        const handler = commandHandlers[cmd];
+        if (handler) {
+            handler(msg, args);
+        } else {
+            msg.reply("Unknown command. Type !help for a list of commands.");
+        };
+    };
 };
 
 //run the client
 (async () => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log("connected to the database")
-
         client.on("messageCreate", messageHandling);
         client.login(process.env.BOT_TOKEN);
     } catch (error) {

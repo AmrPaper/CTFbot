@@ -77,7 +77,6 @@ function reactionManagement(msg, rrMessage, client) {
 function getRoleName(emoji) {
     switch (emoji) {
         case "🔴":
-            console.log("fetching red team")
             return "Team Red";
         case "🔵":
             return "Team Blue";
