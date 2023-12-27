@@ -1,22 +1,30 @@
 const {EmbedBuilder} = require("discord.js");
-flags = ["flag1", "flag2", "flag3"];
-
-//checks for flags and replies accordingly
-function submitFlag(msg, args) {
-    if (args.length > 0) {
-        const submittedFlag = args[0];
-        if (flags.includes(submittedFlag)) {
-            msg.reply("You've submitted the correct flag!");
-        } else {msg.reply("The flag you submitted is incorrect");}
-    } else {msg.reply("Please submit a valid flag");}
-};
 
 function help(msg) {
     const cmdList = new EmbedBuilder()
     .setTitle("Help!")
     .setDescription("A list of all currently available commands.")
     .setColor("#0099ff")
-    .setFooter({text: "Powered by Mexi's laptop 🍞",});
+    .setFooter({text: "Powered by Mexi's laptop 🍞",})
+    .addFields({
+        name: "!welcome",
+        value: "Provides you with a welcome message that contains the outlines of the CTF",
+        inline: false,
+    },{
+        name: "!intro",
+        value: "Provides you with the introduction to the story of the CTF",
+        inline: false,
+    },{
+        name: "!phase[]",
+        value: "Provides you with the files for the specified challenge, replace the [] with the number of the stage you're currently on.\n For example using !phase2 will give you the files for the second stage!",
+        inline: false,
+    },{
+        name: "!submit-flag",
+        value: "Allows you to submit the flag to complete the challenge you're currently on and unlock the next one!\n Use case: !submit-flag flag",
+        inline: false,
+    },);
+
+    msg.channel.send({embeds: [cmdList]});
 }
 
 function welcome(msg) {
@@ -54,7 +62,7 @@ function intro(msg) {
 };
 
 module.exports = {
-    submitFlag,
     welcome,
     intro,
+    help,
 };
