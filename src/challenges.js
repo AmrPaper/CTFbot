@@ -17,16 +17,19 @@ async function phase1(msg) {
     const usrRoles = msg.member.roles.cache.map(r => r.name);
     if (usrRoles.includes("CTF") == false) {
         msg.reply("You are not participating in the ongoing CTF, please contact Paper for assistance!");
-    };
-
-    const team = msg.member.roles.cahe.filter(r => r.name.toLowerCase().startsWith("team"));
-    
-    if (checkPhase(team, 1)) {
-        msg.reply({embeds: [challengeTxt]});
     } else {
-        msg.reply("You have not started the CTF yet!");
-    };
+        const team = msg.member.roles.cache.filter(r => r.name.toLowerCase().startsWith("team")).first();
 
+        if (team) {
+            if (await checkPhase(team, 0)) {
+                msg.reply({embeds: [challengeTxt]});
+            } else {
+                msg.reply("You have not started the CTF yet!");
+            };
+        } else {
+            msg.reply("You do not belong to a team yet, please contact Paper for assistance!")
+        };
+    };
 };
 
 async function phase2(msg) {
@@ -44,14 +47,18 @@ async function phase2(msg) {
     const usrRoles = msg.member.roles.cache.map(r => r.name);
     if (usrRoles.includes("CTF") == false) {
         msg.reply("You are not participating in the ongoing CTF, please contact Paper for assistance!");
-    };
-
-    const team = msg.member.roles.cahe.filter(r => r.name.toLowerCase().startsWith("team"));
-    
-    if (checkPhase(team, 2)) {
-        msg.reply({embeds: [challengeTxt]});
     } else {
-        msg.reply("You have not reached Phase 2 yet! Please complete the previous phase first.");
+        const team = msg.member.roles.cache.filter(r => r.name.toLowerCase().startsWith("team")).first();
+
+        if (team) {
+            if (await checkPhase(team, 1) == true) {
+                msg.reply({embeds: [challengeTxt]});
+            } else {
+                msg.reply("You have not completed the previous stage yet!");
+            };
+        } else {
+            msg.reply("You do not belong to a team yet, please contact Paper for assistance!")
+        };
     };
 };
 
@@ -70,14 +77,18 @@ async function phase3(msg) {
     const usrRoles = msg.member.roles.cache.map(r => r.name);
     if (usrRoles.includes("CTF") == false) {
         msg.reply("You are not participating in the ongoing CTF, please contact Paper for assistance!");
-    };
-
-    const team = msg.member.roles.cahe.filter(r => r.name.toLowerCase().startsWith("team"));
-    
-    if (checkPhase(team, 3)) {
-        msg.reply({embeds: [challengeTxt]});
     } else {
-        msg.reply("You have not reached Phase 3 yet! Please complete the previous phase first.");
+        const team = msg.member.roles.cache.filter(r => r.name.toLowerCase().startsWith("team")).first();
+    
+        if (team) {
+            if (await checkPhase(team, 2) === true) {
+                msg.reply({embeds: [challengeTxt]});
+            } else {
+                msg.reply("You have not completed the previous stage yet!");
+            };
+        } else {
+            msg.reply("You do not belong to a team yet, please contact Paper for assistance!")
+        };
     };
 };
 
@@ -96,14 +107,18 @@ async function phase4(msg) {
     const usrRoles = msg.member.roles.cache.map(r => r.name);
     if (usrRoles.includes("CTF") == false) {
         msg.reply("You are not participating in the ongoing CTF, please contact Paper for assistance!");
-    };
-
-    const team = msg.member.roles.cahe.filter(r => r.name.toLowerCase().startsWith("team"));
-    
-    if (checkPhase(team, 4)) {
-        msg.reply({embeds: [challengeTxt]});
     } else {
-        msg.reply("You have not reached Phase 4 yet! Please complete the previous phase first.");
+        const team = msg.member.roles.cache.filter(r => r.name.toLowerCase().startsWith("team")).first();
+    
+        if (team) {
+            if (await checkPhase(team, 3) == true) {
+                msg.reply({embeds: [challengeTxt]});
+            } else {
+                msg.reply("You have not completed the previous stage yet!");
+            };
+        } else {
+            msg.reply("You do not belong to a team yet, please contact Paper for assistance!")
+        };
     };
 };
 

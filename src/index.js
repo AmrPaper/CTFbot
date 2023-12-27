@@ -2,6 +2,7 @@ const {Client, IntentsBitField, ActivityType} = require("discord.js");
 require("dotenv").config(); //for env vars
 const {submitFlag, welcome, intro} = require("./commands.js");
 const {setup} = require("./teamAssignment.js");
+const {phase1, phase2, phase3, phase4} = require("./challenges.js");
 const prefix = "!"; //command prefix
 
 //discord bot itself and what it's capable of accessing
@@ -28,6 +29,10 @@ const commandHandlers = {
     "submit-flag": submitFlag,
     "welcome": welcome,
     "intro": intro,
+    "phase1": phase1,
+    "phase2": phase2,
+    "phase3": phase3,
+    "phase4": phase4,
     "bloop": (msg) => {
         console.log(msg.author);
         msg.reply("User info logged!");
