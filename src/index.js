@@ -3,7 +3,7 @@ require("dotenv").config(); //for env vars
 const {welcome, intro, help} = require("./commands.js");
 const {setup} = require("./teamAssignment.js");
 const {phase1, phase2, phase3, phase4} = require("./challenges.js");
-const {submitFlag} = require("./db.js");
+const {submitFlag, leaderboard} = require("./db.js");
 const prefix = "!"; //command prefix
 
 //discord bot itself and what it's capable of accessing
@@ -31,6 +31,7 @@ const commandHandlers = {
     "welcome": welcome,
     "intro": intro,
     "help": help,
+    "leaderboard": leaderboard,
     "phase1": phase1,
     "phase2": phase2,
     "phase3": phase3,

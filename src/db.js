@@ -1,3 +1,4 @@
+const {EmbedBuilder} = require("discord.js");
 const {MongoClient} = require("mongodb");
 flags = {"1": "flag1", "2": "flag2", "3": "flag3", "4": "flag4"};
 
@@ -81,7 +82,60 @@ async function submitFlag(msg, args) {
     }
 };
 
+async function leaderboard (msg, args) {
+    const client = new MongoClient(process.env.MONGODB_URI);
+    
+    try {
+        const database = client.db("AmiraCTF");
+        const collection = database.collection("progressTracking");
+
+        const cursor = collection.find();
+        var teams = []
+                
+        for await (const t of cursor) {
+            teams.push(t);
+        };
+
+        const progressKeysAndValuesWithTeamName = teams.map(team => {
+            const progressData = Object.entries(team.progress).map(([key, value]) => [key, value.toString()]);
+            return [team.teamName, progressData];
+          });
+          
+          // Sort teams based on progress
+        const sortedTeams = progressKeysAndValuesWithTeamName.sort((a, b) => {
+            const aProgress = a[1].reduce((acc, curr) => acc + (curr[1] === 'true'), 0);
+            const bProgress = b[1].reduce((acc, curr) => acc + (curr[1] === 'true'), 0);
+            return bProgress - aProgress;
+        });
+
+        const leaderboardTxt = new EmbedBuilder()
+        .setTitle("Leaderboard")
+        .setColor("#0099ff")
+        .setFooter({text: "Powered by Mexi's laptop 🍞",})
+        .addFields({
+            name: "Note",
+            value:"The scoreboard is not sorted because this shouldn't be treated as a race or competition of any sort, we're all here to learn and have a good time, keep it light hearted 😊",
+            inline: false,
+        });
+        sortedTeams.forEach((team, index) => {
+            const progressCount = team[1].reduce((acc, curr) => acc + (curr[1] === 'true'), 0);
+            leaderboardTxt.addFields({
+                name: `${team[0]}`,
+                value:`Progress: ${progressCount}/4 stages`,
+                inline: false,
+            })
+        });
+
+        msg.channel.send({embeds: [leaderboardTxt]});
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    } finally {
+        await client.close();
+    }
+}
+
 module.exports = {
     checkPhase,
     submitFlag,
+    leaderboard,
 }
