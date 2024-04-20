@@ -10,15 +10,15 @@ async function setup(msg, client) {
         const rrEmbed = new EmbedBuilder()
         .setTitle("Team Assignment!")
         .setDescription(`Choose a team by reacting to this message! Here's a legend for which reaction is tied to which team:\n
-        🔴 - Team Red\n
-        🔵 - Team Blue\n
-        🟣 - Team Purple\n
-        ⚫ - Team Nigg\n
+        👵 - Team Haboba\n
+        🤓 - Team Compoopy\n
+        🦅 - Team Sugoor\n
+        🦁 - Team Power\n
         ⚪ - Team Colonisers`)
         .setColor("#0099ff")
         .setFooter({text: "Powered by Mexi's laptop 🍞",});
 
-        const emojis = ['🔴','🔵','🟣','⚫','⚪'];
+        const emojis = ['👵','🤓','🦅','🦁','⚪'];
         
         const rrMessage = await msg.channel.send({embeds: [rrEmbed]});
 
@@ -76,14 +76,14 @@ function reactionManagement(msg, rrMessage, client) {
 
 function getRoleName(emoji) {
     switch (emoji) {
-        case "🔴":
-            return "Team Red";
-        case "🔵":
-            return "Team Blue";
-        case "🟣":
-            return "Team Purple";
-        case "⚫":
-            return "Team Nigg";
+        case "👵":
+            return "Team Haboba";
+        case "🤓":
+            return "Team Compoopy";
+        case "🦅":
+            return "Team Sugoor";
+        case "🦁":
+            return "Team Power";
         case "⚪":
             return "Team Colonisers";
         default:
