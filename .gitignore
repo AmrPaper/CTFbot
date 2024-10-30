@@ -1,3 +1,2 @@
 .env
-mongodb/
-lectures/
+node_modules/

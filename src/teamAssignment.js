@@ -14,11 +14,13 @@ async function setup(msg, client) {
         🤓 - Team Compoopy\n
         🦅 - Team Sugoor\n
         🦁 - Team Power\n
-        ⚪ - Team Colonisers`)
+        :despair: - Team Cultists\n
+        🥒 - Team Khiyara\n
+        :quack: - Team Quackers`)
         .setColor("#0099ff")
         .setFooter({text: "Powered by Mexi's laptop 🍞",});
 
-        const emojis = ['👵','🤓','🦅','🦁','⚪'];
+        const emojis = ['👵','🤓','🦅','🦁', ':despair:', '🥒', ':quack:'];
         
         const rrMessage = await msg.channel.send({embeds: [rrEmbed]});
 
@@ -84,8 +86,12 @@ function getRoleName(emoji) {
             return "Team Sugoor";
         case "🦁":
             return "Team Power";
-        case "⚪":
-            return "Team Colonisers";
+        case "despair":
+            return "Team Cultists";
+        case "🥒":
+            return "Team Khiyara";
+        case "quack":
+            return "Team Quackers";
         default:
             return null;
     }
